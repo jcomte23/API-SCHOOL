@@ -20,7 +20,6 @@ namespace api_school.Models
 
         [Required(ErrorMessage = "date is required.")]
         [DataType(DataType.Date)]
-        [ValidateNextDate(ErrorMessage = "date cannot be in the past.")]
         [Column("date")]
         public DateOnly Date { get; set; }
 
