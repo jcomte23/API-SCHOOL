@@ -28,14 +28,14 @@ namespace api_school.Controllers.Students
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
-            var author = await _studentRepository.GetById(id);
+            var student = await _studentRepository.GetById(id);
 
-            if (author == null)
+            if (student == null)
             {
                 return NotFound();
             }
 
-            return Ok(author);
+            return Ok(student);
         }
 
     }
