@@ -25,7 +25,7 @@ namespace api_school.Services.Students
 
         public async Task<bool> CheckExistence(int id)
         {
-             return await _context.Students.AnyAsync(e => e.Id == id);
+            return await _context.Students.AnyAsync(e => e.Id == id);
         }
 
         public async Task<IEnumerable<Student>> GetAll()
