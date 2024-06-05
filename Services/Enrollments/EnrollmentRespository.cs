@@ -30,12 +30,12 @@ namespace api_school.Services.Enrollments
 
         public async Task<IEnumerable<Enrollment>> GetAll()
         {
-            return await _context.Enrollments.ToListAsync();
+            return await _context.Enrollments.Include(e => e.Student).Include(e => e.Course).ThenInclude(c => c.Teacher).ToListAsync();
         }
 
         public async Task<Enrollment?> GetById(int id)
         {
-            return await _context.Enrollments.FirstOrDefaultAsync(e => e.Id == id);
+            return await _context.Enrollments.Include(e => e.Student).Include(e => e.Course).ThenInclude(c => c.Teacher).FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task Update(Enrollment enrollment)
