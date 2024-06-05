@@ -25,7 +25,7 @@ namespace api_school.Services.Students
 
         public async Task<bool> CheckExistence(int id)
         {
-            return await _context.Students.AnyAsync(e => e.Id == id);
+            return await _context.Students.AnyAsync(s => s.Id == id);
         }
 
         public async Task<IEnumerable<Student>> GetAll()
@@ -35,7 +35,7 @@ namespace api_school.Services.Students
 
         public async Task<Student?> GetById(int id)
         {
-            return await _context.Students.FirstOrDefaultAsync(e => e.Id == id);
+            return await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task Update(Student student)
