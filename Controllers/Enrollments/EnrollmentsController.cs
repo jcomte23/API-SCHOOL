@@ -37,5 +37,20 @@ namespace api_school.Controllers.Enrollments
 
             return Ok(enrollment);
         }
+
+        [HttpGet("{date}/date")]
+        public async Task<ActionResult<IEnumerable<Enrollment>>> GetAppointmentsByDate(string date)
+        {
+            // Parse the date string to DateOnly
+            if (!DateOnly.TryParse(date, out DateOnly parsedDate))
+            {
+                return BadRequest("Invalid date format. Please use yyyy-MM-dd.");
+            }
+
+            var allEnrollments = await _enrollmentRepository.GetAll();
+            var enrollmentsByDate = allEnrollments.Where(e => e.Date == parsedDate).ToList();
+
+            return Ok(enrollmentsByDate);
+        }
     }
 }
