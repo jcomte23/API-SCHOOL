@@ -1,4 +1,5 @@
 using api_school.Data;
+using api_school.Services.Students;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnection"),
                     ServerVersion.Parse("8.0.20-mysql")));
 builder.Services.AddControllers();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
