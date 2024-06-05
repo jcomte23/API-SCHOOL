@@ -1,5 +1,6 @@
 using api_school.Data;
 using api_school.Services.Courses;
+using api_school.Services.Enrollments;
 using api_school.Services.Students;
 using api_school.Services.Teachers;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRespository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
