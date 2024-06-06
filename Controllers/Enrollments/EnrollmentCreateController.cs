@@ -23,7 +23,8 @@ namespace api_school.Controllers.Enrollments
         public async Task<IActionResult> Post([FromBody] Enrollment enrollment)
         {
             await _enrollmentRepository.Add(enrollment);
-
+            MailController Email = new MailController();
+            Email.SendEmail("javiercombita2014@gmail.com");
             return Created($"api/enrollments/{enrollment.Id}", enrollment);
         }
     }

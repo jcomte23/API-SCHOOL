@@ -1,3 +1,5 @@
+using System.Net;
+using System.Net.Http.Json;
 using System.Text.Json;
 using api_school.Models.ApiMail;
 
@@ -9,11 +11,7 @@ namespace api_school.Controllers
     {
 
 
-        // static async Task ProcessRepositoriesAsync(HttpClient client)
-        // {
-
-        // }
-        public async void SendEmail()
+        public async void SendEmail(string email)
         {
 
 
@@ -30,6 +28,22 @@ namespace api_school.Controllers
                 Text = "Test",
                 Html = "Test"
             };
+
+            var client = new HttpClient();
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri(url),
+                Headers = {
+                { HttpRequestHeader.Authorization.ToString(), $"Bearer {jwt}" },
+                { HttpRequestHeader.Accept.ToString(), "application/json" },
+                { "X-Version", "1" }
+            },
+                Content = new StringContent(JsonSerializer.Serialize(emailMessage))
+            };
+
+            var response = client.SendAsync(httpRequestMessage).Result;
+
 
 
 
