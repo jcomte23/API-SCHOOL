@@ -53,5 +53,20 @@ namespace api_school.Controllers.Students
             return Ok(enrollments);
         }
 
+        [HttpGet("{date}/birthday")]
+        public async Task<ActionResult<IEnumerable<Student>>> GetStudentsByBirthday(string date)
+        {
+            // Parse the date string to DateOnly
+            if (!DateOnly.TryParse(date, out DateOnly parsedDate))
+            {
+                return BadRequest("Invalid date format. Please use yyyy-MM-dd.");
+            }
+
+            var allStudents = await _studentRepository.GetAll();
+            var studentsByDate = allStudents.Where(s => s.Birthdate == parsedDate).ToList();
+
+            return Ok(studentsByDate);
+        }
+
     }
 }
