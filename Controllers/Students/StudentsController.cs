@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api_school.Models;
+using api_school.Services.Enrollments;
 using api_school.Services.Students;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +14,12 @@ namespace api_school.Controllers.Students
     public class StudentsController : ControllerBase
     {
         private readonly IStudentRepository _studentRepository;
+        private readonly IEnrollmentRepository _enrollmentRepository;
 
-        public StudentsController(IStudentRepository studentRepository)
+        public StudentsController(IStudentRepository studentRepository, IEnrollmentRepository enrollmentRepository)
         {
             _studentRepository = studentRepository;
+            _enrollmentRepository = enrollmentRepository;
         }
 
         [HttpGet]
@@ -36,6 +39,18 @@ namespace api_school.Controllers.Students
             }
 
             return Ok(student);
+        }
+
+        [HttpGet("{id}/enrollments")]
+        public async Task<ActionResult<IEnumerable<Enrollment>>> GetEnrollments(int id)
+        {
+            var enrollments = await _enrollmentRepository.GetAll();
+            enrollments = enrollments.Where(e => e.StudentId == id).ToList();
+            if (!enrollments.Any())
+            {
+                return NotFound(new { message = $"No enrollments found for student with ID {id}." });
+            }
+            return Ok(enrollments);
         }
 
     }
